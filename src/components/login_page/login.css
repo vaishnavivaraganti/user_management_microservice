@@ -1,0 +1,15 @@
+.login-page-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px;
+}
+
+.login-page-content{
+    margin-top: 100px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    box-shadow: 1px 1px 10px grey;
+}
