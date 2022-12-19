@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <header>
         <Router>
-          {/* <LoginPage /> */}
+          {/* <LoginPage />  */}
           <Link to='/login'>Login</Link>
           <Routes>
             <Route exact path='/login' element={<LoginPage/>}></Route>

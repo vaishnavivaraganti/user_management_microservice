@@ -12,15 +12,15 @@ function ForgotPasswordPage(){
             <form className="Forgot-page-form">
                 <div class="form-group">
                     <label for="forgot-user-id" style={{float:"left"}}><b>User name</b></label>
-                    <input maxLength={"20"} id="forgot-user-id" type="text" className="form-control" placeholder="Enter your User ID or email"/>
+                    <input maxLength={"20"} id="forgot-user-id" type="text" className="form-control" placeholder="Enter your User ID "/>
                 </div>
                 <div class="form-group">
-                    <label for="forgot-email" style={{float:"left"}}><b>Password</b></label>
+                    <label for="forgot-email" style={{float:"left"}}><b>Email</b></label>
                     <input id="forgot-email" type="text" className="form-control" placeholder="Enter your email"/>
                     <small style={{float:"left"}}>Password will be sent to this email address.</small>
                 </div>
                 
-                <button className="btn btn-primary w-100">Send Password</button>
+                <button className="btn btn-primary w-100">Send Password Reset link</button>
             </form>
         </div>
     );
