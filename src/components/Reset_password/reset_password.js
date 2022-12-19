@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import './reset_password.css';
 import logo from '../../assets/login-page-logo.png';
 
+const hostURL = 'http://localhost:8000'
 
 function Password_reset(){
 
@@ -11,6 +12,7 @@ function Password_reset(){
 
     const [btnDisable, setbtnDisable] = useState(true);
     const [passwordMatch, setPasswordMatch] = useState(<></>);
+    const [resetStatus,setresetStatus]=useState(<></>)
 
     function checkPassword(){
         if((password.current.value === confirmPassword.current.value)){
@@ -33,6 +35,34 @@ function Password_reset(){
         setbtnDisable(true);
         setPasswordMatch(<></>);
     }
+    function reset(e){
+        e.preventDefault();
+        fetch(hostURL+'/reset_password',{
+            method:"PUT",
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({Email:email.current.value,Password:password.current.value})
+
+        })
+        .then(res => res.json())
+        .then((data)=>{
+            console.log(data);
+            if(data.err){
+                setresetStatus(<small className="text-danger">{data.err}</small>);
+                return;
+
+            }
+            setresetStatus(<small className="text-success">{data.msg}</small>)
+            return;
+        }).catch((err) =>{
+            console.log(err);
+
+        });
+
+
+    }
 
     return (
         <div className="container w-50 p-5 password-reset-page-content">
@@ -53,8 +83,9 @@ function Password_reset(){
                     <input ref={confirmPassword} id="confirm-pasword" onInput={checkPassword} type="password" className="form-control" placeholder="Confirm your Password"/>
                 </div>
                 {passwordMatch}
-                <button disabled={btnDisable} className="btn btn-primary w-100">Reset Password</button>
+                <button onClick={reset} disabled={btnDisable} className="btn btn-primary w-100">Reset Password</button>
                 <button onClick={cancel} className="btn btn-primary w-100">Cancel</button>
+                {resetStatus}
             </form>
         </div>
     );

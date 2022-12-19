@@ -35,7 +35,10 @@ function LoginPage(){
             }
             setLoginStatus(<small className="text-success">{data.msg}</small>)
             return;
-        });    
+        }).catch((err) =>{
+            console.log(err);
+
+        });
     }
 
     function checkInputFields(){
