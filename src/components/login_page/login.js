@@ -12,10 +12,11 @@ function LoginPage(){
     var user_name = useRef(HTMLInputElement);
     var password = useRef(HTMLInputElement);
     var [loginStatus, setLoginStatus] = useState(<></>);
+    var [loginBtnEnable, setLoginBtnEnable] = useState(true);
 
     function loginSubmit(e){
         e.preventDefault();
-        window.location.href = '/welcome';
+        // window.location.href = '/welcome';
         console.dir(user_name.current.value);
         fetch(hostURL+'/login', {
             method:"POST",
@@ -37,6 +38,15 @@ function LoginPage(){
         });    
     }
 
+    function checkInputFields(){
+        if(user_name.current.value.length > 0 && password.current.value.length > 0){
+            setLoginBtnEnable(false);
+        }
+        else{
+            setLoginBtnEnable(true);
+        }
+    }
+
     return (
         <div className="container w-50 p-5 login-page-content">
             <img src={logo} alt="logo"/>
@@ -44,11 +54,11 @@ function LoginPage(){
             <form className="login-page-form">
                 <div class="form-group">
                     <label for="login-user-id" style={{float:"left"}}><b>User name</b></label>
-                    <input ref={user_name} id="login-user-id" type="text" className="form-control" placeholder="Enter your User ID or email"/>
+                    <input ref={user_name} onInput={checkInputFields} id="login-user-id" type="text" className="form-control" placeholder="Enter your User ID or email"/>
                 </div>
                 <div class="form-group">
                     <label for="login-password" style={{float:"left"}}><b>Password</b></label>
-                    <input ref={password} id="login-password" type="password" className="form-control" placeholder="Password"/>
+                    <input ref={password} onInput={checkInputFields} id="login-password" type="password" className="form-control" placeholder="Password"/>
                 </div>
                 <div className="small">
                     <div style={{float:"left"}}> 
@@ -60,7 +70,7 @@ function LoginPage(){
                         <Link to="/forgot">Forgot Password ?</Link>
                     </div>
                 </div>
-                <button onClick={loginSubmit} id="login-submit-btn" className="btn btn-primary w-100">Login</button>
+                <button onClick={loginSubmit} disabled={loginBtnEnable} id="login-submit-btn" className="btn btn-primary w-100">Login</button>
                 {loginStatus}
             </form>
         </div>
