@@ -18,9 +18,8 @@ function App() {
           {/* <Link to='/login'>Login</Link> */}
           <Routes>
             <Route exact path='/login' element={<LoginPage/>}></Route>
-            {/* <Route exact path='/forgot' element={<ForgotPasswordPage/>}></Route> */}
+            <Route exact path='/forgot' element={<ForgotPasswordPage/>}></Route>
             <Route exact path='/reset' element={<Password_reset />}></Route>
-            {/* <Route exact path='/welcome' element={<DummyPage/>}></Route>             */}
           </Routes>
         </Router>
         {/* <ForgotPasswordPage /> */}
