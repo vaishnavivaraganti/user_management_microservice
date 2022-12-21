@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import './login.css';
 import logo from '../../assets/login-page-logo.png';
 import DummyPage from '../DummyPage/DummyPage';
@@ -13,10 +13,11 @@ function LoginPage(){
     var password = useRef(HTMLInputElement);
     var [loginStatus, setLoginStatus] = useState(<></>);
     var [loginBtnEnable, setLoginBtnEnable] = useState(true);
+    const navigate = useNavigate();
 
     function loginSubmit(e){
         e.preventDefault();
-        // window.location.href = '/welcome';
+        navigate('/welcome');
         console.dir(user_name.current.value);
         fetch(hostURL+'/login', {
             method:"POST",
