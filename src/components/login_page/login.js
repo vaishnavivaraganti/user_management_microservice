@@ -55,13 +55,14 @@ function LoginPage(){
             <img src={logo} alt="logo"/>
             <br/>
             <form className="login-page-form">
-                <div class="form-group">
+                <div className="form-group">
                     <label for="login-user-id" style={{float:"left"}}><b>User name</b></label>
                     <input ref={user_name} onInput={checkInputFields} id="login-user-id" type="text" className="form-control" placeholder="Enter your User ID or email"/>
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                     <label for="login-password" style={{float:"left"}}><b>Password</b></label>
                     <input ref={password} onInput={checkInputFields} id="login-password" type="password" className="form-control" placeholder="Password"/>
+                    <i className='bi bi-eye'></i>
                 </div>
                 <div className="small">
                     <div style={{float:"left"}}> 
