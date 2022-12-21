@@ -145,7 +145,7 @@ function Password_reset(){
     }
 
     return (
-        <div className="container w-50 p-5 password-reset-page-content">
+        <div className="container  p-5 password-reset-page-content">
             <img src={logo} alt="logo"/>
             <br/>
             <h1>Password Reset</h1>
@@ -172,9 +172,9 @@ function Password_reset(){
                     <input ref={confirmPassword} disabled={cfPasswordDisable} id="confirm-pasword" onInput={checkPassword} type="password" className="form-control" placeholder="Confirm your Password"/>
                 </div>
                 {passwordMatch}
-                <div style={{display:"flex", justifyContent:"space-around"}}>
-                    <button onClick={reset} disabled={btnDisable} className="btn btn-primary w-25">Reset Password</button>
-                    <button onClick={cancel} className="btn btn-primary w-25">Cancel</button>
+                <div style={{display:"flex", justifyContent:"space-between"}}>
+                    <button onClick={reset} style={{fontSize:"12px", width:"120px"}} disabled={btnDisable} className="btn btn-primary">Reset Password</button>
+                    <button onClick={cancel} style={{fontSize:"12px", width:"120px"}} className="btn btn-primary">Cancel</button>
                 </div>
                 {resetStatus}
             </form>

@@ -1,8 +1,8 @@
 .login-page-form{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 250px;
+    justify-content: space-around;
+    height: 300px;
 }
 
 .login-page-content{
@@ -12,4 +12,5 @@
     border-color: black;
     border-style: solid;
     box-shadow: 1px 1px 10px grey;
+    width:350px;
 }

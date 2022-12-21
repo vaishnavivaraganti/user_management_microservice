@@ -46,7 +46,7 @@ function ForgotPasswordPage(){
     }
 
     return (
-        <div className="container w-50 p-5 Forgot-page-content">
+        <div className="container  p-5 Forgot-page-content">
             <img src={logo} alt="logo"/>
             <br/>
             <h1>Forgot Password</h1>

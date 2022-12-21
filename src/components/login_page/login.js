@@ -51,7 +51,7 @@ function LoginPage(){
     }
 
     return (
-        <div className="container w-50 p-5 login-page-content">
+        <div className="container  p-5 login-page-content">
             <img src={logo} alt="logo"/>
             <br/>
             <form className="login-page-form">
@@ -82,3 +82,4 @@ function LoginPage(){
 }
 
 export default LoginPage;
+
