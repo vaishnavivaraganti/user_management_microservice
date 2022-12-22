@@ -5,12 +5,25 @@
     height: 300px;
 }
 
+#password-visibility{
+    margin-top: 8px;
+    width: 27px;
+    height: 18px;
+    position: absolute;
+    right: 10px;
+    top : 26px
+}
+
+.password-field{
+    position: relative;
+}
+
 .login-page-content{
-    margin-top: 100px;
+    margin-top: 50px;
     border-radius: 5px;
     border-width: 1px;
     border-color: black;
     border-style: solid;
     box-shadow: 1px 1px 10px grey;
-    width:350px;
+    /* width:370px; */
 }

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './reset_password.css';
 import logo from '../../assets/login-page-logo.png';
+import visibleImg from '../../assets/visible.png'
+import inVisibleImg from '../../assets/invisible.png'
 
 const hostURL = 'http://localhost:8000'
 
@@ -18,6 +20,8 @@ function Password_reset(){
     const [cond3, setCond3] = useState(false);
     const [cond4, setCond4] = useState(false);
     const [cond5, setCond5] = useState(false);
+    var [visible, setVisible] = useState(false);
+    var [visible2, setVisible2] = useState(false);
     const [cfPasswordDisable, setCfPasswordDisable] = useState(true);
     useEffect(()=>{
         if(cond1 && cond2 && cond3 && cond4 && cond5){
@@ -143,20 +147,30 @@ function Password_reset(){
 
 
     }
+    function toggleVisibility(){
+        setVisible(prev => !prev);
+    }
+
+    function toggleVisibility2(){
+        setVisible2(prev => !prev);
+    }
 
     return (
-        <div className="container  p-5 password-reset-page-content">
-            <img src={logo} alt="logo"/>
+        <div className="container p-4 password-reset-page-content col-4">
+            <img src={logo} className="img-fluid" alt="logo"/>
             <br/>
             <h1>Password Reset</h1>
             <form className="password-reset-page-form">
                 <div className="form-group">
-                    <label for="login-email-id" style={{float:"left"}}><b>Email</b></label>
-                    <input ref={email} id="login-email-id" type="email" onInput={checkPassword} className="form-control" placeholder="Enter your email"/>
+                    <label for="reset-email-id" style={{float:"left"}}><b>Email</b></label>
+                    <input ref={email} id="reset-email-id" type="email" onInput={checkPassword} className="form-control" placeholder="Enter your email"/>
                 </div>
                 <div className="form-group">
-                    <label for="login-password" style={{float:"left"}}><b>Password</b></label>
-                    <input ref={password} id="login-password" type="password" onChange={checkPasswordConditions} className="form-control" placeholder=" Enter your Password"/>
+                    <label for="reset-password" style={{float:"left"}}><b>Password</b></label>
+                    <div className="password-field">
+                    <input ref={password} id="reset-password" type={visible ? "text":"password"} onChange={checkPasswordConditions} className="form-control" placeholder=" Enter your Password"/>
+                    <img id="password-visibility" onClick={toggleVisibility} src={visible ? visibleImg : inVisibleImg}></img>
+                    </div>
                 </div>
                 <div className="password-rules">
                     <ul style={{listStyleType:"none", fontSize:"x-small", float:"left", textJustify:"left"}}>
@@ -169,12 +183,15 @@ function Password_reset(){
                 </div>
                 <div className="form-group">
                     <label for="confirm-password" style={{float:"left"}}><b>Confirm Password</b></label>
-                    <input ref={confirmPassword} disabled={cfPasswordDisable} id="confirm-pasword" onInput={checkPassword} type="password" className="form-control" placeholder="Confirm your Password"/>
+                    <div className="password-field">
+                    <input ref={confirmPassword} disabled={cfPasswordDisable} id="confirm-pasword" onInput={checkPassword} type={visible2 ? "text":"password"} className="form-control" placeholder="Confirm your Password"/>
+                    <img id="password-visibility" style={{display:(cfPasswordDisable ? "none" : "")}} onClick={toggleVisibility2} src={visible2 ? visibleImg : inVisibleImg}></img>
+                    </div>                
                 </div>
                 {passwordMatch}
                 <div style={{display:"flex", justifyContent:"space-between"}}>
-                    <button onClick={reset} style={{fontSize:"12px", width:"120px"}} disabled={btnDisable} className="btn btn-primary">Reset Password</button>
-                    <button onClick={cancel} style={{fontSize:"12px", width:"120px"}} className="btn btn-primary">Cancel</button>
+                    <button onClick={reset} disabled={btnDisable} className="btn btn-primary col-5">Reset Password</button>
+                    <button onClick={cancel} className="btn btn-primary col-5">Cancel</button>
                 </div>
                 {resetStatus}
             </form>

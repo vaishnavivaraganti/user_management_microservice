@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import './login.css';
 import logo from '../../assets/login-page-logo.png';
+import visibleImg from '../../assets/visible.png'
+import inVisibleImg from '../../assets/invisible.png'
 import DummyPage from '../DummyPage/DummyPage';
 
 const hostURL = 'http://localhost:8000'
@@ -13,6 +15,7 @@ function LoginPage(){
     var password = useRef(HTMLInputElement);
     var [loginStatus, setLoginStatus] = useState(<></>);
     var [loginBtnEnable, setLoginBtnEnable] = useState(true);
+    var [visible, setVisible] = useState(false);
     const navigate = useNavigate();
 
     function loginSubmit(e){
@@ -50,8 +53,15 @@ function LoginPage(){
         }
     }
 
+    function toggleVisibility(){
+        setVisible(prev => !prev);
+    }
+
     return (
-        <div className="container  p-5 login-page-content">
+        <div className="container  p-5 login-page-content col-4">
+            {/* <div className='row'>
+                <div style={{ height: "100px", backgroundColor:"blue"}} className='col-5'>asdsad</div>
+            </div> */}
             <img src={logo} alt="logo"/>
             <br/>
             <form className="login-page-form">
@@ -61,8 +71,10 @@ function LoginPage(){
                 </div>
                 <div className="form-group">
                     <label for="login-password" style={{float:"left"}}><b>Password</b></label>
-                    <input ref={password} onInput={checkInputFields} id="login-password" type="password" className="form-control" placeholder="Password"/>
-                    <i className='bi bi-eye'></i>
+                    <div className="password-field">
+                        <input ref={password} onInput={checkInputFields} id="login-password" type={visible ? "text":"password"} className="form-control" placeholder="Password"/>
+                        <img id="password-visibility" onClick={toggleVisibility} src={visible ? visibleImg : inVisibleImg}></img>
+                    </div>
                 </div>
                 <div className="small">
                     <div style={{float:"left"}}> 
