@@ -1,34 +1,65 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
+import {hashSync} from 'bcryptjs';
+import { useCookies } from 'react-cookie';
+ 
 import './login.css';
+
 import logo from '../../assets/login-page-logo.png';
 import visibleImg from '../../assets/visible.png'
 import inVisibleImg from '../../assets/invisible.png'
-import DummyPage from '../DummyPage/DummyPage';
 
-const hostURL = 'http://localhost:8000'
+const hostURL = 'http://localhost:8000';
 
 function LoginPage(){
 
-
     var user_name = useRef(HTMLInputElement);
     var password = useRef(HTMLInputElement);
+    var rememberMe = useRef(HTMLInputElement);
+
     var [loginStatus, setLoginStatus] = useState(<></>);
     var [loginBtnEnable, setLoginBtnEnable] = useState(true);
     var [visible, setVisible] = useState(false);
+    const [cookie , setCookie] = useCookies(['loginData']);
     const navigate = useNavigate();
+
+    function cookieParse(cookie){
+        let res = cookie.split("; ");
+        for(let i in res){
+            let temp = res[i].split("=");
+            res[i] = [temp[0], temp[1]]
+        }
+        let result = {};
+        for(let i of res){
+            result[i[0]] = i[1];
+        }
+        return result;
+    }
+
+    useEffect(()=>{
+        const cookies = cookieParse(document.cookie);
+        if(cookies.User_Name){
+            console.log('123')
+            user_name.current.value = cookies.User_Name;
+            password.current.value = cookies.Password;
+        }
+    });
 
     function loginSubmit(e){
         e.preventDefault();
-        navigate('/welcome');
-        console.dir(user_name.current.value);
+
+        if(rememberMe.current.checked){
+            setCookie('User_Name' ,  user_name.current.value , {path:'/login' , maxAge: 4 * 24 * 60 * 60});
+            setCookie('Password' ,  password.current.value , {path:'/login' , maxAge: 4 * 24 * 60 * 60});     
+        }
+        
         fetch(hostURL+'/login', {
             method:"POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body:JSON.stringify({User_Name:user_name.current.value, Password:password.current.value})
+            body:JSON.stringify({User_Name:user_name.current.value, Password:hashSync(password.current.value)})
         })
         .then(res => res.json())
         .then((data)=> {
@@ -58,16 +89,13 @@ function LoginPage(){
     }
 
     return (
-        <div className="container  p-5 login-page-content col-4">
-            {/* <div className='row'>
-                <div style={{ height: "100px", backgroundColor:"blue"}} className='col-5'>asdsad</div>
-            </div> */}
-            <img src={logo} alt="logo"/>
+        <div className="container  p-5 login-page-content col-md-5">
+            <img src={logo} className="img-fluid" alt="logo"/>
             <br/>
             <form className="login-page-form">
                 <div className="form-group">
                     <label for="login-user-id" style={{float:"left"}}><b>User name</b></label>
-                    <input ref={user_name} onInput={checkInputFields} id="login-user-id" type="text" className="form-control" placeholder="Enter your User ID or email"/>
+                    <input ref={user_name} onInput={checkInputFields} id="login-user-id" type="text" className="form-control" placeholder="Enter your User name or email"/>
                 </div>
                 <div className="form-group">
                     <label for="login-password" style={{float:"left"}}><b>Password</b></label>
@@ -78,7 +106,7 @@ function LoginPage(){
                 </div>
                 <div className="small">
                     <div style={{float:"left"}}> 
-                        <input type="checkbox" className="form-check-input" id="login-remember-me"/>
+                        <input type="checkbox" ref={rememberMe} className="form-check-input" id="login-remember-me"/>
                         <label for="login-remember-me" style={{marginLeft:"5px"}} className="form-check-label">Remember me</label>
                     </div>
 

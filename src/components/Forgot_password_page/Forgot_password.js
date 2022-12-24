@@ -39,6 +39,7 @@ function ForgotPasswordPage(){
             }
             else{
                 setMsg(<small className="text-success">{data.msg}</small>);
+                setBtnDisable(true);
             }
         }).catch((err)=>{
             setMsg(err);
@@ -46,14 +47,14 @@ function ForgotPasswordPage(){
     }
 
     return (
-        <div className="container  p-5 Forgot-page-content col-4">
-            <img src={logo} alt="logo"/>
+        <div className="container  p-5 Forgot-page-content col-md-5">
+            <img className='img-fluid' src={logo} alt="logo"/>
             <br/>
             <h1>Forgot Password</h1>
             <form className="Forgot-page-form">
                 <div class="form-group">
                     <label for="forgot-user-id" style={{float:"left"}}><b>User name</b></label>
-                    <input ref={user_name} onInput={handleInput} id="forgot-user-id" type="text" className="form-control" placeholder="Enter your User ID or email"/>
+                    <input ref={user_name} onInput={handleInput} id="forgot-user-id" type="text" className="form-control" placeholder="Enter your User name"/>
                 </div>
                 <div class="form-group">
                     <label for="forgot-email" style={{float:"left"}}><b>Email</b></label>

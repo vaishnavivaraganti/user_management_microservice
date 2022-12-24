@@ -1,4 +1,4 @@
-import { BrowserRouter as Router,Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router,Routes, Route, Link } from 'react-router-dom';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -12,7 +12,7 @@ import DummyPage from './components/DummyPage/DummyPage';
 function App() {
   return (
     <div className="App">
-      <header>
+      <header align="center">
         <Router>
           {/* <LoginPage /> */}
           {/* <Link to='/login'>Login</Link> */}

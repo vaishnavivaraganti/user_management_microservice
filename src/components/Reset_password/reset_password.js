@@ -1,4 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react'; 
+import { useNavigate} from 'react-router-dom';
+
+import { hashSync } from 'bcryptjs';
+
 import './reset_password.css';
 import logo from '../../assets/login-page-logo.png';
 import visibleImg from '../../assets/visible.png'
@@ -23,6 +27,9 @@ function Password_reset(){
     var [visible, setVisible] = useState(false);
     var [visible2, setVisible2] = useState(false);
     const [cfPasswordDisable, setCfPasswordDisable] = useState(true);
+
+    const navigate = useNavigate();
+
     useEffect(()=>{
         if(cond1 && cond2 && cond3 && cond4 && cond5){
             setCfPasswordDisable(false);
@@ -64,6 +71,7 @@ function Password_reset(){
             if(alpha.includes(i)){
                 setCond3(true);
                 cond = true;
+                break;
             }
         }
         if(!cond){
@@ -76,6 +84,7 @@ function Password_reset(){
             if(Alpha.includes(i)){
                 setCond2(true);
                 cond = true;
+                break;
             }
         }
         if(!cond){
@@ -88,6 +97,7 @@ function Password_reset(){
             if(spcl.includes(i)){
                 setCond4(true);
                 cond = true;
+                break;
             }
         }
         if(!cond){
@@ -100,24 +110,19 @@ function Password_reset(){
             if(digit.includes(i)){
                 setCond5(true);
                 cond = true;
+                break;
             }
         }
         if(!cond){
             setCond5(false);
         }
-
-        console.log(cond1 + " " + cond2 + " " + cond3 + " " + cond4 + " " + cond5 + " ");
-        // if(cond1 && cond2 && cond3 && cond4 && cond5){
-        //     setCfPasswordDisable(false);
-        // }
-        // else{
-        //     setCfPasswordDisable(true);
-        // }
     }
 
     function cancel(){
         setbtnDisable(true);
         setPasswordMatch(<></>);
+        navigate('/login')
+        
     }
     function reset(e){
         e.preventDefault();
@@ -127,7 +132,7 @@ function Password_reset(){
                 'Accept':'application/json',
                 'Content-Type':'application/json'
             },
-            body:JSON.stringify({Email:email.current.value,Password:password.current.value})
+            body:JSON.stringify({Email:email.current.value,Password:hashSync(password.current.value)})
 
         })
         .then(res => res.json())
@@ -156,7 +161,7 @@ function Password_reset(){
     }
 
     return (
-        <div className="container p-4 password-reset-page-content col-4">
+        <div className="container p-4 password-reset-page-content col-md-5">
             <img src={logo} className="img-fluid" alt="logo"/>
             <br/>
             <h1>Password Reset</h1>
@@ -168,7 +173,7 @@ function Password_reset(){
                 <div className="form-group">
                     <label for="reset-password" style={{float:"left"}}><b>Password</b></label>
                     <div className="password-field">
-                    <input ref={password} id="reset-password" type={visible ? "text":"password"} onChange={checkPasswordConditions} className="form-control" placeholder=" Enter your Password"/>
+                    <input ref={password} id="reset-password" type={visible ? "text":"password"} onChange={checkPasswordConditions} className="form-control" placeholder="Enter your Password"/>
                     <img id="password-visibility" onClick={toggleVisibility} src={visible ? visibleImg : inVisibleImg}></img>
                     </div>
                 </div>
@@ -191,7 +196,7 @@ function Password_reset(){
                 {passwordMatch}
                 <div style={{display:"flex", justifyContent:"space-between"}}>
                     <button onClick={reset} disabled={btnDisable} className="btn btn-primary col-5">Reset Password</button>
-                    <button onClick={cancel} className="btn btn-primary col-5">Cancel</button>
+                    <button onClick={cancel} className="btn btn-primary col-5">Back to Home</button>
                 </div>
                 {resetStatus}
             </form>
